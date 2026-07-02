@@ -22,6 +22,7 @@ const http = require('http');
 const WebSocket = require('ws');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 /**
  * 创建服务器
@@ -39,6 +40,22 @@ function createServer(options = {}) {
     // ============================================================
     // 第一部分：Express HTTP 服务器
     // ============================================================
+
+    /**
+     * 获取本机局域网 IP 地址
+     */
+    function getIPAddress() {
+        const interfaces = os.networkInterfaces();
+        for (const dev of Object.values(interfaces)) {
+            for (const details of dev) {
+                if (details.family === 'IPv4' && !details.internal) {
+                    return details.address;
+                }
+            }
+        }
+        return '127.0.0.1';
+    }
+
     const app = express();
     app.use(express.json());
 
@@ -253,9 +270,13 @@ function createServer(options = {}) {
      */
     function start() {
         server.listen(PORT, () => {
-            console.log(`[Server] Lan Clipboard 已启动: http://localhost:${PORT}`);
-            console.log(`[Server] WebSocket 地址: ws://localhost:${PORT}/<房间名>`);
-            console.log(`[Server] 数据目录: ${DATA_DIR}`);
+            const localIP = getIPAddress();
+            console.log(`[Server] Lan Clipboard 已启动`);
+            console.log(`[Server] 本机访问:    http://localhost:${PORT}`);
+            console.log(`[Server] 局域网访问:  http://${localIP}:${PORT}`);
+            console.log(`[Server] WebSocket:   ws://${localIP}:${PORT}/<房间名>`);
+            console.log(`[Server] 数据目录:    ${DATA_DIR}`);
+            console.log('');
         });
         return server;
     }
