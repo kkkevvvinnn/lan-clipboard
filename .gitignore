@@ -1,0 +1,44 @@
+node_modules/
+dist/
+out/
+build/
+*.log
+.DS_Store
+Thumbs.db
+
+# Electron 打包产物
+desktop-mac/dist/
+desktop-win/dist/
+
+# 用户数据（运行时生成）
+data/
+userData/
+
+# 服务器依赖
+shared/node_modules/
+shared/package-lock.json
+
+# 前端依赖
+web-ui/node_modules/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Android
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+*.apk
+*.aab
+
+# Web
+web-ui/dist/
+web-ui/node_modules/
+
+# env
+.env
+.env.local
