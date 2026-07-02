@@ -24,7 +24,7 @@ jobs:
   # ====== Web 前端检查（web-ui/）— 目录存在时才运行 ======
   check-web:
     runs-on: ubuntu-latest
-    if: hashFiles('web-ui/package.json') != ''
+    if: ${{ hashFiles('web-ui/package.json') != '' }}
     defaults:
       run:
         working-directory: web-ui
