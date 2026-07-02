@@ -21,17 +21,16 @@ jobs:
       - run: npm install
       - run: node -e "require('./server.js')"
 
-  # ====== Web 前端检查（web-ui/）— 目录存在时才运行 ======
-  check-web:
-    runs-on: ubuntu-latest
-    if: ${{ hashFiles('web-ui/package.json') != '' }}
-    defaults:
-      run:
-        working-directory: web-ui
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm install
-      - run: npx eslint src/ --fix || true
+  # TODO: D 创建 web-ui/ 后，取消下面注释添加前端检查
+  # check-web:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: web-ui
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 20
+  #     - run: npm install
+  #     - run: npx eslint src/ --fix || true
