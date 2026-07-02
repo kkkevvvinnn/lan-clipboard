@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  # 检查 Node.js 服务器代码
-  lint-server:
+  # ====== 服务器代码检查（shared/） ======
+  check-server:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -19,12 +19,12 @@ jobs:
         with:
           node-version: 20
       - run: npm install
-      - run: npx eslint server.js --fix || true
       - run: node -e "require('./server.js')"
 
-  # 检查 Web 前端代码
-  lint-web:
+  # ====== Web 前端检查（web-ui/）— 目录存在时才运行 ======
+  check-web:
     runs-on: ubuntu-latest
+    if: hashFiles('web-ui/package.json') != ''
     defaults:
       run:
         working-directory: web-ui
@@ -33,5 +33,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install || true
+      - run: npm install
       - run: npx eslint src/ --fix || true
