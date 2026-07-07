@@ -46,7 +46,6 @@ struct ClipState: View {
         }
     }
 }
-
 #Preview {
     ClipState()
         .environmentObject(AppState())
